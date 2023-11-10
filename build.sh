@@ -1,8 +1,11 @@
 #!/bin/bash
 
+touch should_log.txt
+
 function log_memory {
-    while $true; do
-        cat /proc/meminfo
+    while test -f should_log.txt; do
+        # cat /proc/meminfo
+        echo hi
         sleep 1
     done
 }
@@ -10,3 +13,5 @@ function log_memory {
 log_memory &
 
 npm start
+
+rm should_log.txt
