@@ -24,8 +24,8 @@ async function main() {
 		for (let i = 1; i <= 1000; i++) {
 			queue.add(() => copyFile(i))
 		}
-		await queue.onIdle()
 	}
+	await queue.onIdle()
 	shouldLogMem = false
 	await logProm
 }
