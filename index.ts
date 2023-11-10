@@ -15,7 +15,7 @@ async function main() {
 		}
 	}
 	const logProm = logMemory()
-	const queue = new PQueue({ concurrency: 300000 })
+	const queue = new PQueue({ concurrency: 10000 })
 	const copyFile = async (id: number) => {
 		const data = await fs.readFile(`./assets/${id}.txt`)
 		await fs.writeFile(`./public/${id}.txt`, data)
