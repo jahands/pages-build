@@ -1,8 +1,20 @@
 import PQueue from 'p-queue'
 import fs from 'fs/promises'
+import { exec } from 'child_process'
 
 async function main() {
 	console.log('starting...')
+	let shouldLogMem = true
+	const logMemory = async () => {
+		while (shouldLogMem) {
+			exec('cat /proc/meminfo', (error, stdout, stderr) => {
+				if (stderr) console.log(stderr)
+				if (stdout) console.log(stdout)
+			})
+			await new Promise((r) => setTimeout(r, 2000))
+		}
+	}
+	const logProm = logMemory()
 	const queue = new PQueue({ concurrency: 500 })
 	const copyFile = async (id: number) => {
 		const data = await fs.readFile(`./assets/${id}.txt`)
@@ -14,6 +26,8 @@ async function main() {
 		}
 		await queue.onIdle()
 	}
+	shouldLogMem = false
+	await logProm
 }
 
 main()
