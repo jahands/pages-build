@@ -3,15 +3,17 @@ import fs from 'fs/promises'
 
 async function main() {
 	console.log('starting...')
-	const queue = new PQueue({ concurrency: 30 })
+	const queue = new PQueue({ concurrency: 500 })
 	const copyFile = async (id: number) => {
 		const data = await fs.readFile(`./assets/${id}.txt`)
 		await fs.writeFile(`./public/${id}.txt`, data)
 	}
-	for (let i = 1; i <= 1000; i++) {
-		queue.add(() => copyFile(i))
+	for (let i = 0; i < 1000; i++) {
+		for (let i = 1; i <= 1000; i++) {
+			queue.add(() => copyFile(i))
+		}
+		await queue.onIdle()
 	}
-	await queue.onIdle()
 }
 
 main()
