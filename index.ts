@@ -9,7 +9,7 @@ async function main() {
 		while (shouldLogMem) {
 			exec('cat /proc/meminfo', (error, stdout, stderr) => {
 				if (stderr) console.log(stderr)
-				if (stdout) console.log(stdout)
+				console.log(stdout)
 			})
 			await new Promise((r) => setTimeout(r, 2000))
 		}
