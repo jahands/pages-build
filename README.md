@@ -1,4 +1,4 @@
-Note: Requires Node 20
+Note: Requires Node 16.4.0 (`nvm use`)
 
 To run:
 
